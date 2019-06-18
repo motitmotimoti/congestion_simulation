@@ -39,7 +39,7 @@ def strategy_determine_state(agents):
     """
     each strategy determine next state
     """
-    state_list = ['1','2','3','4','5']
+    state_list = ['Gr','Cl','Rt','Cf','Mg']
 
     for id, agent in enumerate(agents):
         if agent.task > 0:
