@@ -11,7 +11,7 @@ class Agent_store:
         visitor[]: store visiting people each season
         """
         self.type = 'None'
-        self.storage = 0
+        self.capacity = 0
         self.instore = []
         self.waiting = []
         self.visitor = []
