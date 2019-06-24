@@ -42,7 +42,10 @@ def strategy_determine_state(agents):
     state_list = ['Gr','Cl','Rt','Cf','Mg']
 
     for id, agent in enumerate(agents):
-        if agent.task > 0:
+        #first, insert now state into visited list
+        agent.visited_store.append(agent.state)
+
+        if agent.task > 1:
 
             #stay same state
             if agent.strategy == 'A':
@@ -51,20 +54,21 @@ def strategy_determine_state(agents):
             #move other states
             elif agent.strategy == 'B':
                 candidate_list = [e for e in state_list if e != agent.state]
-                agent.next_state = rnd.choice(candidate_list)
-                agent.task = agent.task - 1
+                agent.next_state = rnd.choice(list(set(candidate_list) ^ set(agent.visited_store)))
+                #agent.task = agent.task - 1
 
-            #50-50
+            #30-70
             elif agent.strategy == 'C':
                 if rnd.random() <= 0.3:
                     agent.next_state = agent.state
                 else:
                     candidate_list = [e for e in state_list if e != agent.state]
-                    agent.next_state = rnd.choice(candidate_list)
-                    agent.task = agent.task - 1
+                    agent.next_state = rnd.choice(list(set(candidate_list) ^ set(agent.visited_store)))
+                    #agent.task = agent.task - 1
 
         else:
             agent.next_state = '0'
+            #agent.task = 0
 
 def count_strategy(agents):
     """
