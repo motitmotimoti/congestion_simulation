@@ -35,6 +35,8 @@ def agents_moves(agents):
 
     for id, agent in enumerate(agents):
         if agent.state != '0':
+            if agent.state != agent.next_state:
+                agent.task = agent.task -1
             agent.state = agent.next_state
             agent.next_state = 'NULL'
 
