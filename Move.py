@@ -9,7 +9,7 @@ def initialize_state_task(agents):
     initial_task_list = [1,2,3,4,5]
 
     for agent_id, agent in enumerate(agents):
-        agent.state = rnd.choice(initial_state_list)
+        agent.next_state = rnd.choice(initial_state_list)
         agent.task = rnd.choice(initial_task_list)
         #print(f'agent:{agent_id}, state:{agent.state}, task:{agent.task}')
 
@@ -21,27 +21,30 @@ def state_task_for_new_agents(agents):
     state_list = ['Gr','Cl','Rt','Cf','Mg']
     task_list = [1,2,3,4,5]
     for agent_id, agent in enumerate(agents):
-        agent.state= rnd.choice(state_list)
-        agent.next_state = agent.state
+        agent.next_state= rnd.choice(state_list)
+        #agent.next_state = agent.state
         agent.task = rnd.choice(task_list)
         #print(f'new_agent:{agent_id}, state:{agent.state}, task:{agent.task}')
 
 
 
-def agents_moves(agents):
+def agents_moves(agents,season):
     """
     agents go to next_state
     """
 
     for id, agent in enumerate(agents):
-        if agent.state != '0':
+        if agent.next_state != '0':
             if agent.state != agent.next_state:
-                agent.task = agent.task -1
+                if season != 1:
+                    agent.task = agent.task -1
             agent.state = agent.next_state
             agent.next_state = 'NULL'
 
         else:
             agent.state = '0'
+
+
 
 
 
