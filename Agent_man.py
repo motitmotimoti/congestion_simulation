@@ -10,16 +10,16 @@ class Agent_man:
         state = ['0','Gr','Cl','Rt','Cf','Mg'] (0:exit 1~5:store)
         strategy = ['A','B','C']    (A:like to stay here , B: like to move other stores, C:50-50 )
         task: how many have something to do
-        status = ['In':in the store, 'Wt':waiting to enter store]
+        status = ['In':in the store, 'Wt':waiting to enter store '0':exit]
         visited_store: store Agent visited in past
         """
 
-        self.state = 'Gr'
+        self.state = '0'
         self.next_state = '0'
         self.strategy = 'A'
         self.next_strategy = 'A'
         self.task = 0
-        self.status = 'In'
+        self.status = '0'
         self.neighbors_id = []
         self.visited_store = []
 
@@ -47,4 +47,4 @@ def show_agent_info(agents):
     show information of agents
     """
     for agent_id, agent in enumerate(agents):
-        print(f'agent No:{agent_id}, state:{agent.state}, next_state:{agent.next_state}, strategy:{agent.strategy}, next_strategy:{agent.next_strategy}, task:{agent.task}, visited:{agent.visited_store}')
+        print(f'agent No:{agent_id}, state:{agent.state}, next_state:{agent.next_state}, strategy:{agent.strategy}, next_strategy:{agent.next_strategy}, task:{agent.task}, status:{agent.status}, visited:{agent.visited_store}')
