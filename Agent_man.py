@@ -10,7 +10,7 @@ class Agent_man:
         state = ['0','Gr','Cl','Rt','Cf','Mg'] (0:exit 1~5:store)
         strategy = ['A','B','C']    (A:like to stay here , B: like to move other stores, C:50-50 )
         task: how many have something to do
-        status = ['In':in the store, 'Wt':waiting to enter store '0':exit]
+        status = ['In':in the store, 'Wt':waiting to enter store 'Out':exit]
         visited_store: store Agent visited in past
         """
 
