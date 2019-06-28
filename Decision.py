@@ -35,12 +35,48 @@ def insert_strategy(agents):
     Agent_man.show_agent_info(agents)
 
 
-def strategy_determine_state(agents):
-    """
-    each strategy determine next state
-    """
-    state_list = ['Gr','Cl','Rt','Cf','Mg']
+def strategy_determine_state(agents,agents_store):
 
+    state_list = ['Gr','Cl','Rt','Cf','Mg']
+    """
+    ↓: agent.status determine next_state
+    """
+    for id,agent in enumerate(agents):
+         #first, insert now state into visited list
+         agent.visited_store.append(agent.state)
+
+         if agent.task > 1 or agent.status == 'Wt':
+
+             if agent.status == 'Wt':
+                 agent.next_state = agent.state
+
+             elif agent.status == 'In':
+                 if rnd.random() <= 0.5:
+                     agent.next_state = agent.state
+                 else:
+                     #candidate_list = [e for e in state_list if e != agent.state]
+                     if  len(list(set(state_list) - set(agent.visited_store))) != 0:
+                         agent.next_state = rnd.choice(list(set(state_list) - set(agent.visited_store)))
+                     else:
+                         agent.next_state = '0'
+
+                     for agent_store in agents_store:
+                         if agent_store.type == agent.state:
+                             if id in agent_store.instore:
+                                 agent_store.instore.remove(id)
+
+         else:
+              agent.next_state = '0'
+              for agent_store in agents_store:
+                  if id in agent_store.instore:
+                      agent_store.instore.remove(id)
+
+
+
+    """
+    ↓:each strategy determine next state
+    """
+    """
     for id, agent in enumerate(agents):
         #first, insert now state into visited list
         agent.visited_store.append(agent.state)
@@ -69,6 +105,8 @@ def strategy_determine_state(agents):
         else:
             agent.next_state = '0'
             #agent.task = 0
+    """
+
 
 def count_strategy(agents):
     """
