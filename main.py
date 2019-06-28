@@ -10,14 +10,15 @@ import Manage_store
 
 def main():
     ###Calcualtion setting ###
-    num_agent = 100
+    num_agent = 50
+
     """
     average_range
     beta
     gamma
     param_ramge
     """
-    max_season = 2
+    max_season = 4
     list_state = []
     list_task = []
     result_list_state = []
@@ -74,8 +75,14 @@ def main():
             Manage_store.manage_instore_waiting_first(agents,agents_store,list_Rt,'Rt')
             Manage_store.manage_instore_waiting_first(agents,agents_store,list_Cf,'Cf')
             Manage_store.manage_instore_waiting_first(agents,agents_store,list_Mg,'Mg')
+        if season != 1:
+            Manage_store.manage_instore_waiting_second(agents,agents_store,list_Gr,'Gr')
+            Manage_store.manage_instore_waiting_second(agents,agents_store,list_Cl,'Cl')
+            Manage_store.manage_instore_waiting_second(agents,agents_store,list_Rt,'Rt')
+            Manage_store.manage_instore_waiting_second(agents,agents_store,list_Cf,'Cf')
+            Manage_store.manage_instore_waiting_second(agents,agents_store,list_Mg,'Mg')
 
-        git 
+
         Agent_man.show_agent_info(agents)
 
 
@@ -109,6 +116,12 @@ def main():
 
         list_state = []
         list_task = []
+        list_Gr = []
+        list_Cl = []
+        list_Rt = []
+        list_Cf = []
+        list_Mg = []
+
         #print(f'list_state:{list_state}')
 
 
