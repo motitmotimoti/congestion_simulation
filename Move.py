@@ -43,6 +43,9 @@ def agents_moves(agents,season):
 
         else:
             agent.state = '0'
+            agent.status = 'Out'
+            agent.task = 0
+
 
 
 
