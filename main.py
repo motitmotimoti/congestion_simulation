@@ -18,7 +18,7 @@ def main():
     gamma
     param_ramge
     """
-    max_season = 4
+    max_season = 20
     list_state = []
     list_task = []
     result_list_state = []
@@ -40,7 +40,7 @@ def main():
                          'sC':[]
                          })
     #initialization of ramdom int
-    num_new_agent = rnd.randint(1,10)
+    num_new_agent = rnd.randint(1,8)
 
 
     #Prepare agents & initialize state & task &strategy
@@ -60,7 +60,7 @@ def main():
         if season != 1:
             #generate new agents
             print('==== generate new agents ====')
-            #Agent_man.new_generate_agents(num_new_agent,agents)
+            Agent_man.new_generate_agents(num_new_agent,agents)
 
         #move next_state
         print('===== agent move =====')
@@ -88,7 +88,7 @@ def main():
 
         #strategy determine next_state
         print('==== decide next state ====')
-        Decision.strategy_determine_state(agents)
+        Decision.strategy_determine_state(agents,agents_store)
         #agents determine next_strategy
         print('==== decide next strategy ====')
         Decision.decide_next_strategy(agents)
@@ -106,7 +106,7 @@ def main():
 
         #infomation of state store result_list_state
         for id, agent in enumerate(agents):
-            list_state.append(agent.state)
+            list_state.append(agent.state+'_'+agent.status)
             list_task.append(agent.task)
         #print(f'list_state:{list_state}')
         #print(f'result_list_state:{result_list_state}')
