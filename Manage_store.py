@@ -27,7 +27,7 @@ def divide_visitor(agents):
 
 def manage_instore_waiting_first(agents,agents_store,list,type):
     """
-    manage instore & waiting  & manage agents_status
+    manage instore & waiting  & manage agents_status in 1st seacon
     """
 
     for agent_store in agents_store:
@@ -39,6 +39,28 @@ def manage_instore_waiting_first(agents,agents_store,list,type):
             agent_store.instore, agent_store.waiting = tmp[:agent_store.capacity], tmp[agent_store.capacity:]
             print(f'instore:{agent_store.instore}, waiting:{agent_store.waiting}')
             for id, agent in enumerate(agents):
+                if id in agent_store.instore:
+                    agent.status = 'In'
+                elif id in agent_store.waiting:
+                    agent.status = 'Wt'
+
+
+def manage_instore_waiting_second(agents,agents_store,list_x,type):
+    """
+    manage instore & waiting  & manage agents_status after 1st seasons
+    """
+
+    for agent_store in agents_store:
+        if agent_store.type == type:
+            print(f'type:{type}')
+            tmp = agent_store.instore + agent_store.waiting + list_x
+            print(f'tmp:{tmp}')
+            print(f'capa:{agent_store.capacity}')
+            tmp = list(dict.fromkeys(tmp))
+            print(f'tmp:{tmp}')
+            agent_store.instore, agent_store.waiting = tmp[:agent_store.capacity], tmp[agent_store.capacity:]
+            print(f'instore:{agent_store.instore}, waiting:{agent_store.waiting}')
+            for id,agent in enumerate(agents):
                 if id in agent_store.instore:
                     agent.status = 'In'
                 elif id in agent_store.waiting:
