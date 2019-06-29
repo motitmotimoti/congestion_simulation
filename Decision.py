@@ -51,19 +51,32 @@ def strategy_determine_state(agents,agents_store):
                  agent.next_state = agent.state
 
              elif agent.status == 'In':
-                 if rnd.random() <= 0.5:
-                     agent.next_state = agent.state
-                 else:
-                     #candidate_list = [e for e in state_list if e != agent.state]
-                     if  len(list(set(state_list) - set(agent.visited_store))) != 0:
-                         agent.next_state = rnd.choice(list(set(state_list) - set(agent.visited_store)))
-                     else:
-                         agent.next_state = '0'
 
-                     for agent_store in agents_store:
-                         if agent_store.type == agent.state:
-                             if id in agent_store.instore:
-                                 agent_store.instore.remove(id)
+                 if agent.state == 'Rt' or agent.state == 'Cf':
+                     if rnd.random() <= 0.6:
+                         agent.next_state = agent.state
+                     else:
+                         if len(list(set(state_list) - set(agent.visited_store))) != 0:
+                             agent.next_state = rnd.choice(list(set(state_list) - set(agent.visited_store)))
+                         else:
+                             agent.next_state = '0'
+                         for agent_store in agents_store:
+                             if agent_store.type == agent.state:
+                                 if id in agent_store.instore:
+                                     agent_store.instore.remove(id)
+                 else:
+                     if rnd.random() <= 0.5:
+                         agent.next_state = agent.state
+                     else:
+                         #candidate_list = [e for e in state_list if e != agent.state]
+                         if len(list(set(state_list) - set(agent.visited_store))) != 0:
+                             agent.next_state = rnd.choice(list(set(state_list) - set(agent.visited_store)))
+                         else:
+                             agent.next_state = '0'
+                         for agent_store in agents_store:
+                             if agent_store.type == agent.state:
+                                 if id in agent_store.instore:
+                                     agent_store.instore.remove(id)
 
          else:
               agent.next_state = '0'
