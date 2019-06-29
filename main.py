@@ -10,7 +10,7 @@ import Manage_store
 
 def main():
     ###Calcualtion setting ###
-    num_agent = 50
+    num_agent = 100
 
     """
     average_range
@@ -40,7 +40,7 @@ def main():
                          'sC':[]
                          })
     #initialization of ramdom int
-    num_new_agent = rnd.randint(1,8)
+    num_new_agent = rnd.randint(1,20)
 
 
     #Prepare agents & initialize state & task &strategy
