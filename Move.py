@@ -6,7 +6,7 @@ def initialize_state_task(agents):
     Ramdamly select initially state and task of agents
     """
     initial_state_list = ['Gr','Cl','Rt','Cf','Mg']
-    initial_task_list = [1,2,3,4,5]
+    initial_task_list = [3,4,5]
 
     for agent_id, agent in enumerate(agents):
         agent.next_state = rnd.choice(initial_state_list)
