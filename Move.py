@@ -46,8 +46,19 @@ def agents_moves(agents,season):
             agent.status = 'Out'
             agent.task = 0
 
+def count_store_all(agents):
+    """
+    count agents in shoppingmoll except state'0'
+    """
+    f1 = len([agent for agent in agents if agent.state == 'Gr'])
+    f2 = len([agent for agent in agents if agent.state == 'Cl'])
+    f3 = len([agent for agent in agents if agent.state == 'Rt'])
+    f4 = len([agent for agent in agents if agent.state == 'Cf'])
+    f5 = len([agent for agent in agents if agent.state == 'Mg'])
 
+    num = f1+f2+f3+f4+f5
 
+    return num
 
 
 
@@ -56,11 +67,11 @@ def count_state_num(agents):
     count the fraction of 1/2/3/4/5/0 state agents
     """
 
-    f1 = len([agent for agent in agents if agent.state == 'Gr']) / len(agents)
-    f2 = len([agent for agent in agents if agent.state == 'Cl']) / len(agents)
-    f3 = len([agent for agent in agents if agent.state == 'Rt']) / len(agents)
-    f4 = len([agent for agent in agents if agent.state == 'Cf']) / len(agents)
-    f5 = len([agent for agent in agents if agent.state == 'Mg']) / len(agents)
+    f1 = len([agent for agent in agents if agent.state == 'Gr']) / count_store_all(agents)
+    f2 = len([agent for agent in agents if agent.state == 'Cl']) / count_store_all(agents)
+    f3 = len([agent for agent in agents if agent.state == 'Rt']) / count_store_all(agents)
+    f4 = len([agent for agent in agents if agent.state == 'Cf']) / count_store_all(agents)
+    f5 = len([agent for agent in agents if agent.state == 'Mg']) / count_store_all(agents)
     f0 = len([agent for agent in agents if agent.state == '0']) / len(agents)
 
     return f1, f2, f3, f4, f5, f0
