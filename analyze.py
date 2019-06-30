@@ -10,7 +10,8 @@ length = len(df)
 #print(df)
 
 
-def generate_matrix(df_csv, x):
+
+def generate_matrix(df_csv,df_info, x):
 
     df_0 = df_csv[x:x+2]
     #print(df_0)
@@ -24,13 +25,11 @@ def generate_matrix(df_csv, x):
     #print(list_1)
     #print(list_2)
     #print(list_2)
-    #list_1.append(list_2)
-    #print(type(list_0))
-    #list_0 = []
-    #list_0.append(list_1)
-    #list_0.append(list_2)
-    #print(list_0)
-    #print(f'[0][0]:{list_0[0][108]}, [1][1]:{list_0[1][1]}')
+
+    df_info_0 = df_info.iloc[:,6]
+    df_info_0 = df_info_0.values.tolist()
+    #print(type(df_info_0))
+    #print(df_info_0[0])
 
     Gr_Gr, Gr_Cl, Gr_Rt, Gr_Cf, Gr_Mg, Gr_Out = 0, 0, 0, 0, 0, 0
     Cl_Gr, Cl_Cl, Cl_Rt, Cl_Cf, Cl_Mg, Cl_Out = 0, 0, 0, 0, 0, 0
@@ -133,8 +132,8 @@ def generate_matrix(df_csv, x):
     [Mg_Gr, Mg_Cl, Mg_Rt, Mg_Cf, Mg_Mg, Mg_Out],
     [Out_Gr, Out_Cl, Out_Rt, Out_Cf, Out_Mg, Out_Out]])
 
-    print(len(list_1))
-    matrix_n = matrix / len(list_1)
+    print(df_info_0[x+1])
+    matrix_n = matrix / (df_info_0[x+1])
     np.set_printoptions(precision=4)
 
     #print(f'matrix:\n{matrix}')
