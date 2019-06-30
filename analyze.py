@@ -6,8 +6,9 @@ import numpy as np
 df = pd.read_csv('result_list_state.csv', index_col=0)
 df = df.fillna('Na')
 length = len(df)
-print(length)
+#print(length)
 #print(df)
+
 
 def generate_matrix(df_csv, x):
 
@@ -20,8 +21,8 @@ def generate_matrix(df_csv, x):
     #print(len(list_2))
     list_1 = list_1 + ['0_Out' for i in range(len(list_2)-len(list_1))]
     #print(len(list_1))
-    print(list_1)
-    print(list_2)
+    #print(list_1)
+    #print(list_2)
     #print(list_2)
     #list_1.append(list_2)
     #print(type(list_0))
@@ -132,16 +133,17 @@ def generate_matrix(df_csv, x):
     [Mg_Gr, Mg_Cl, Mg_Rt, Mg_Cf, Mg_Mg, Mg_Out],
     [Out_Gr, Out_Cl, Out_Rt, Out_Cf, Out_Mg, Out_Out]])
 
+    print(len(list_1))
     matrix_n = matrix / len(list_1)
     np.set_printoptions(precision=4)
 
-    print(f'matrix:\n{matrix}')
-    print(f'matrix_n:\n{matrix_n}')
+    #print(f'matrix:\n{matrix}')
+    #print(f'matrix_n:\n{matrix_n}')
 
     return matrix, matrix_n
 
 #↓　使用例ーこれでマトリックスが取得可能
 # lengthはcsvの行数を表す
-for x in range(0,length-1):
-    mat_x, result_x = generate_matrix(df,x)
-    print(f'mat_{x}:\n{mat_x}\nresult_{x}:\n{result_x}')
+#for x in range(0,length-1):
+    #mat_x, result_x = generate_matrix(df,x)
+    #print(f'mat_{x}:\n{mat_x}\nresult_{x}:\n{result_x}')
