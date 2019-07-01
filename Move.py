@@ -67,12 +67,15 @@ def count_state_num(agents):
     count the fraction of 1/2/3/4/5/0 state agents
     """
 
-    f1 = len([agent for agent in agents if agent.state == 'Gr']) / count_store_all(agents)
-    f2 = len([agent for agent in agents if agent.state == 'Cl']) / count_store_all(agents)
-    f3 = len([agent for agent in agents if agent.state == 'Rt']) / count_store_all(agents)
-    f4 = len([agent for agent in agents if agent.state == 'Cf']) / count_store_all(agents)
-    f5 = len([agent for agent in agents if agent.state == 'Mg']) / count_store_all(agents)
-    f0 = len([agent for agent in agents if agent.state == '0']) / len(agents)
+    f1 = len([agent for agent in agents if agent.state == 'Gr']) #/ count_store_all(agents,num_new)
+    f2 = len([agent for agent in agents if agent.state == 'Cl']) #/ count_store_all(agents,num_new)
+    f3 = len([agent for agent in agents if agent.state == 'Rt']) #/ count_store_all(agents,num_new)
+    f4 = len([agent for agent in agents if agent.state == 'Cf']) #/ count_store_all(agents,num_new)
+    f5 = len([agent for agent in agents if agent.state == 'Mg']) #/ count_store_all(agents,num_new)
+    #new = num_new / count_store_all(agents,num_new)
+    f0 = len([agent for agent in agents if agent.state == '0']) #/ len(agents)
+
+    #print(f'store_all:{count_store_all(agents,num_new)}')
 
     return f1, f2, f3, f4, f5, f0
 
