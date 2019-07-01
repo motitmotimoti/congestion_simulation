@@ -18,7 +18,7 @@ def main():
     gamma
     param_ramge
     """
-    max_season = 20
+    max_season = 37
     list_state = []
     list_task = []
     result_list_state = []
@@ -34,13 +34,15 @@ def main():
                          'Rt':[],
                          'Cf':[],
                          'Mg':[],
+                         'New':[],
                          's0':[],
+                         'Sa':[],
                          'sA':[],
                          'sB':[],
                          'sC':[]
                          })
     #initialization of ramdom int
-    num_new_agent = rnd.randint(1,20)
+    num_new_agent = 0
 
 
     #Prepare agents & initialize state & task &strategy
@@ -55,9 +57,13 @@ def main():
     for season in range(1, max_season):
 
 
+
+
         print('###########################')
         print(f'simulate season:{season}')
-        if season != 1:
+        if season != 1 and season != max_season-1:
+
+            num_new_agent = rnd.randint(1,100)
             #generate new agents
             print('==== generate new agents ====')
             Agent_man.new_generate_agents(num_new_agent,agents)
@@ -83,7 +89,7 @@ def main():
             Manage_store.manage_instore_waiting_second(agents,agents_store,list_Mg,'Mg')
 
 
-        Agent_man.show_agent_info(agents)
+        #Agent_man.show_agent_info(agents)
 
 
         #strategy determine next_state
@@ -99,8 +105,10 @@ def main():
 
 
         Gr,Cl,Rt,Cf,Mg,s0 = Move.count_state_num(agents)
+        Sa = Move.count_store_all(agents)
         sA,sB,sC = Decision.count_strategy(agents)
-        new_info = pd.DataFrame([[format(Gr, '.2%'),format(Cl,'.2%'),format(Rt,'.2%'),format(Cf,'.2%'),format(Mg,'.2%'),format(s0,'.2%'),sA,sB,sC]],columns=['Gr','Cl','Rt','Cf','Mg','s0','sA','sB','sC'])
+        new_info = pd.DataFrame([[Gr,Cl,Rt,Cf,Mg,num_new_agent,s0,Sa,sA,sB,sC]],columns=['Gr','Cl','Rt','Cf','Mg','New','s0','Sa','sA','sB','sC'])
+        #new_info = pd.DataFrame([[format(Gr, '.4'),format(Cl,'.4'),format(Rt,'.4'),format(Cf,'.4'),format(Mg,'.4'),num_new_agent,format(s0,'.4'),Sa,sA,sB,sC]],columns=['Gr','Cl','Rt','Cf','Mg','New','s0','Sa','sA','sB','sC'])
         info = info.append(new_info)
         #print(f'info:{info}')
 
