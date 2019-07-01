@@ -32,7 +32,7 @@ def insert_strategy(agents):
     for agent_id, agent in enumerate(agents):
         agent.strategy = agent.next_strategy
 
-    Agent_man.show_agent_info(agents)
+    #Agent_man.show_agent_info(agents)
 
 
 def strategy_determine_state(agents,agents_store):

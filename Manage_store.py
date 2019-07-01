@@ -43,6 +43,9 @@ def manage_instore_waiting_first(agents,agents_store,list,type):
                     agent.status = 'In'
                 elif id in agent_store.waiting:
                     agent.status = 'Wt'
+                    # if task= 1 & Wt, next_state will be '0', so agent.task + 1
+                    #if agent.task == 1:
+                        #agent.task = agent.task + 1
 
 
 def manage_instore_waiting_second(agents,agents_store,list_x,type):
@@ -60,8 +63,12 @@ def manage_instore_waiting_second(agents,agents_store,list_x,type):
             print(f'tmp:{tmp}')
             agent_store.instore, agent_store.waiting = tmp[:agent_store.capacity], tmp[agent_store.capacity:]
             print(f'instore:{agent_store.instore}, waiting:{agent_store.waiting}')
+
             for id,agent in enumerate(agents):
                 if id in agent_store.instore:
                     agent.status = 'In'
                 elif id in agent_store.waiting:
                     agent.status = 'Wt'
+                    # if task= 1 & Wt, next_state will be '0', so agent.task + 1
+                    #if agent.task == 1:
+                        #agent.task = agent.task + 1
