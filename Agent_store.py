@@ -38,7 +38,7 @@ def init_agent_store(agents_store):
             agent_store.capacity = 1000000
         elif store_id == 2:
             agent_store.type = 'Rt'
-            agent_store.capacity = 50
+            agent_store.capacity = 60
         elif store_id == 3:
             agent_store.type = 'Cf'
             agent_store.capacity = 30
