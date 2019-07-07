@@ -6,8 +6,7 @@ import numpy as np
 df_state = pd.read_csv('result_list_state.csv', index_col=0)
 df_state = df_state.fillna('Na')
 length = len(df_state)
-#print(length)
-#print(df)
+
 
 #result_info.csvの読み込み
 df_info = pd.read_csv('result_info.csv',index_col=0)
@@ -22,6 +21,7 @@ print(f'init_state:\n{state}')
 print(f'init_state_n:\n{state_n}')
 #print(f'df_info_init:\n{df_info_init}')
 #print(type(df_info_init))
+result_markov = []
 
 
 for x in range(0,length-1):
@@ -32,3 +32,10 @@ for x in range(0,length-1):
     state_n = np.dot(state_n,result_x)
     print(f'{x+1}シーズン')
     print(state_n)
+
+    state_m = state_n.round(4)
+    result_markov.append(state_m[0].tolist())
+
+print(result_markov)
+markov = pd.DataFrame(result_markov, columns=['Gr','Cl','Rt','Cf','Mg','0_out'])
+markov.to_csv(f'markov_chain.csv')
