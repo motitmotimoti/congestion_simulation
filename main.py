@@ -10,7 +10,10 @@ import Manage_store
 
 def main():
     ###Calcualtion setting ###
-    num_agent = 100
+    #low:100, 30
+    #medium:130, 60 
+    #high: 160, 100
+    num_agent = 160
 
     """
     average_range
@@ -138,9 +141,10 @@ def main():
 
     print(f'result:{state}')
 
-    state.to_csv(f'result_list_state.csv')
-    task.to_csv(f'result_list_task.csv')
-    info.to_csv(f'result_info.csv')
+    #ディレクトリの変更必須！！！
+    state.to_csv(f'result/high/result_list_state_high.csv')
+    task.to_csv(f'result/high/result_list_task_high.csv')
+    info.to_csv(f'result/high/result_info_high.csv')
 
 
 
