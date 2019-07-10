@@ -10,8 +10,9 @@ import Manage_store
 
 def main():
     ###Calcualtion setting ###
+    
     #low:100, 30
-    #medium:130, 60 
+    #medium:130, 60
     #high: 160, 100
     num_agent = 160
 
