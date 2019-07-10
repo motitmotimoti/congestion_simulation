@@ -3,9 +3,9 @@ import numpy as np
 
 
 
-df = pd.read_csv('result_list_state.csv', index_col=0)
-df = df.fillna('Na')
-length = len(df)
+#df = pd.read_csv('result_list_state.csv', index_col=0)
+#df = df.fillna('Na')
+#length = len(df)
 #print(length)
 #print(df)
 
