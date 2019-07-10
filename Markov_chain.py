@@ -4,14 +4,14 @@ import numpy as np
 
 #result_list_state.csvの読み込み
 #ディレクトリの変更をするように！！
-df_state = pd.read_csv('result_list_state.csv', index_col=0)
+df_state = pd.read_csv('result/high/2019-07-10/result_list_state_high.csv', index_col=0)
 df_state = df_state.fillna('Na')
 length = len(df_state)
 
 
 #result_info.csvの読み込み
 #ディレクトリの変更を忘れずに！！！
-df_info = pd.read_csv('result_info.csv',index_col=0)
+df_info = pd.read_csv('result/high/2019-07-10/result_info_high.csv',index_col=0)
 df_info_init = df_info.iloc[:1,0:6]
 
 df_info_0 = df_info.iloc[:,7]
@@ -42,6 +42,7 @@ for x in range(0,length-1):
 
 #print(result_markov)
 markov = pd.DataFrame(result_markov, columns=['Gr','Cl','Rt','Cf','Mg','0_out'])
-markov.to_csv(f'markov_chain.csv')
+#ディレクトリの変更
+markov.to_csv(f'markov/high/2019-07-10/markov_chain.csv')
 
-print(np.load('matrix/high/2019-07-10/result_test_1.npy'))
+#print(np.load('matrix/high/2019-07-10/result_test_1.npy'))
