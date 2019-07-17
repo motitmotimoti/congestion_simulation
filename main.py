@@ -10,11 +10,11 @@ import Manage_store
 
 def main():
     ###Calcualtion setting ###
-    
-    #low:100, 30
-    #medium:130, 60
-    #high: 160, 100
-    num_agent = 160
+
+    #low:100, 30 　全体としてunder 150
+    #medium:130, 60 全体としてはunder 250
+    #high: 160, 100 全体としてunder 500
+    num_agent = 100
 
     """
     average_range
@@ -56,8 +56,8 @@ def main():
     Agent_store.show_store_info(agents_store)
     Move.initialize_state_task(agents)
     Decision.initial_strategy(agents)
-    #Agent_man.show_agent_info(agents)
-
+    Agent_man.show_agent_info(agents)
+"""
     for season in range(1, max_season):
 
 
@@ -67,7 +67,7 @@ def main():
         print(f'simulate season:{season}')
         if season != 1 and season != max_season-1:
 
-            num_new_agent = rnd.randint(1,100)
+            num_new_agent = rnd.randint(1,30)
             #generate new agents
             print('==== generate new agents ====')
             Agent_man.new_generate_agents(num_new_agent,agents)
@@ -143,12 +143,12 @@ def main():
     print(f'result:{state}')
 
     #ディレクトリの変更必須！！！
-    state.to_csv(f'result/high/result_list_state_high.csv')
-    task.to_csv(f'result/high/result_list_task_high.csv')
-    info.to_csv(f'result/high/result_info_high.csv')
+    state.to_csv(f'result/low/2019-07-12/result_list_state_3.csv')
+    task.to_csv(f'result/low/2019-07-12/result_list_task_3.csv')
+    info.to_csv(f'result/low/2019-07-12/result_info_3.csv')
 
 
-
+"""
 
 
 if __name__=='__main__':
