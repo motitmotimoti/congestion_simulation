@@ -1,5 +1,6 @@
 import random as rnd
 import Agent_man
+import Agent_store
 
 def initialize_state_task(agents):
     """
@@ -11,7 +12,14 @@ def initialize_state_task(agents):
     for agent_id, agent in enumerate(agents):
         agent.next_state = rnd.choice(initial_state_list)
         agent.task = rnd.choice(initial_task_list)
+        agent.list_store = rnd.sample(initial_state_list, agent.task)
         #print(f'agent:{agent_id}, state:{agent.state}, task:{agent.task}')
+        for list in agent.list_store:
+            agent.spent_time.append(Agent_store.service_time(list))
+        
+
+
+
 
 def state_task_for_new_agents(agents):
     """
