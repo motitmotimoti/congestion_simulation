@@ -1,4 +1,5 @@
 import random as rnd
+import numpy as np
 
 class Agent_store:
 
@@ -15,6 +16,7 @@ class Agent_store:
         self.instore = []
         self.waiting = []
         self.visitor = []
+
 
 def generate_agent_store(num_store):
     """
@@ -46,6 +48,31 @@ def init_agent_store(agents_store):
             agent_store.type = 'Mg'
             agent_store.capacity = 1000000
 
+def service_time(type):
+    """
+    determine service time using np.random.normal() for each store
+    """
+    if type == 'Gr':
+        time = np.random.normal(20,2)
+        time = 1 if time < 20 else 2
+    elif type == 'Cl':
+        time = np.random.normal(30,3)
+        time = 2 if time < 30 else 3
+    elif type == 'Rt':
+        time = np.random.normal(60,3)
+        time = 5 if time < 60 else 6
+    elif type == 'Cf':
+        if rnd.random() < 0.5:
+            time = np.random.normal(30,2)
+            time = 2 if time < 30 else 3
+        else:
+            time = np.random.normal(60,2)
+            time = 5 if time < 60 else 6 
+    elif type == 'Mg':
+        time = np.random.normal(20,2)
+        time = 1 if time < 20 else 2
+
+    return time
 
 def show_store_info(agents_store):
     """
