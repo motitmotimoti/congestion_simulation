@@ -12,6 +12,8 @@ class Agent_man:
         task: how many have something to do
         status = ['In':in the store, 'Wt':waiting to enter store 'Out':exit]
         visited_store: store Agent visited in past
+        list_store: store lists that will wants to visit
+        spent_time: how nuch spent for each list_store
         """
 
         self.state = '0'
@@ -22,6 +24,8 @@ class Agent_man:
         self.status = '0'
         self.neighbors_id = []
         self.visited_store = []
+        self.list_store = []
+        self.spent_time = []
 
 
 def generate_agents(num_agent):
@@ -47,4 +51,4 @@ def show_agent_info(agents):
     show information of agents
     """
     for agent_id, agent in enumerate(agents):
-        print(f'agent No:{agent_id}, state:{agent.state}, next_state:{agent.next_state}, strategy:{agent.strategy}, next_strategy:{agent.next_strategy}, task:{agent.task}, status:{agent.status}, visited:{agent.visited_store}')
+        print(f'agent No:{agent_id}, state:{agent.state}, next_state:{agent.next_state}, strategy:{agent.strategy}, next_strategy:{agent.next_strategy}, task:{agent.task}, status:{agent.status}, visited:{agent.visited_store}, list:{agent.list_store}, spent_time:{agent.spent_time}')
