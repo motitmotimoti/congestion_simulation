@@ -63,7 +63,8 @@ def generate_matrix(df_csv,df_info,dist, x):
     #初期状態の0_Outへの代入
     print(f'new:{new[x+1]}')
     print(f'df_info_0:{df_info_0[x]}')
-    dist[0,5] = float( new[x+1] / (df_info_0[x]+new[x+1]))
+    #dist[0,5] = float( new[x+1] / (df_info_0[x]+new[x+1]))
+    dist[0,5] = new[x+1]
     print(f'dist:{dist}')
 
 
@@ -174,12 +175,20 @@ def generate_matrix(df_csv,df_info,dist, x):
 
 
     #遷移確率分布　ex) P(Gr|Gr) = P(Gr∧Gr) / p(Gr)
+    """
     Gr_x_num_n = (Gr_x_num / total) / dist[0][0]
     Cl_x_num_n = (Cl_x_num / total) / dist[0][1]
     Rt_x_num_n = (Rt_x_num / total) / dist[0][2]
     Cf_x_num_n = (Cf_x_num / total) / dist[0][3]
     Mg_x_num_n = (Mg_x_num / total) / dist[0][4]
     Out_x_num_n = (Out_x_num / total) / dist[0][5]
+    """
+    Gr_x_num_n = (Gr_x_num / total) / (dist[0][0] / total)
+    Cl_x_num_n = (Cl_x_num / total) / (dist[0][1] / total)
+    Rt_x_num_n = (Rt_x_num / total) / (dist[0][2] / total)
+    Cf_x_num_n = (Cf_x_num / total) / (dist[0][3] / total)
+    Mg_x_num_n = (Mg_x_num / total) / (dist[0][4] / total)
+    Out_x_num_n = (Out_x_num / total) / (dist[0][5] / total)
 
 
     matrix_n = np.r_[Gr_x_num_n, Cl_x_num_n, Rt_x_num_n, Cf_x_num_n, Mg_x_num_n, Out_x_num_n]
