@@ -8,7 +8,8 @@ class Agent_man:
     def __init__(self):
         """
         state = ['0','Gr','Cl','Rt','Cf','Mg'] (0:exit 1~5:store)
-        strategy = ['A','B','C']    (A:like to stay here , B: like to move other stores, C:50-50 )
+        #strategy = ['A','B','C']    (A:like to stay here , B: like to move other stores, C:50-50 )
+        strategy = ['A','B','C','D']    (A:likely visit crowed store, B: likely visit vacant store, C: prioritize store, D: randamly visit store)
         task: how many have something to do
         status = ['In':in the store, 'Wt':waiting to enter store 'Out':exit]
         visited_store: store Agent visited in past
@@ -19,13 +20,13 @@ class Agent_man:
         self.state = '0'
         self.next_state = '0'
         self.strategy = 'A'
-        self.next_strategy = 'A'
+        self.next_strategy = '0'
         self.task = 0
         self.status = '0'
         self.neighbors_id = []
         self.visited_store = []
         self.list_store = []
-        self.spent_time = []
+        self.spent_time = {'Gr':0, 'Cl':0, 'Rt':0, 'Cf':0, 'Mg':0}
 
 
 def generate_agents(num_agent):
