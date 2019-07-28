@@ -18,6 +18,7 @@ class Agent_store:
         self.waiting = []
         self.visitor = []
         self.floor = 0
+        self.Es_distance = 0
 
 
 def generate_agent_store(num_store):
@@ -38,22 +39,27 @@ def init_agent_store(agents_store):
             agent_store.type = 'Gr'
             agent_store.capacity = 1000000
             agent_store.floor = 0
+            agent_store.Es_distance = 3
         elif store_id == 1:
             agent_store.type = 'Cl'
             agent_store.capacity = 1000000
             agent_store.floor = 3
+            agent_store.Es_distance = 5
         elif store_id == 2:
             agent_store.type = 'Rt'
             agent_store.capacity = 60
             agent_store.floor = 4
+            agent_store.Es_distance = 5
         elif store_id == 3:
             agent_store.type = 'Cf'
             agent_store.capacity = 30
             agent_store.floor = 2
+            agent_store.Es_distance = 1
         else:
             agent_store.type = 'Mg'
             agent_store.capacity = 1000000
             agent_store.floor = 1
+            agent_store.Es_distance = 6
 
 def service_time(type):
     """
@@ -121,16 +127,29 @@ def store_map(agents_store):
 
     return map
 
-def distance_store(map):
+def calc_distance(state_now, state_destination, agents_store):
+    """
+    現在いるところと目的地の間の距離を計算
+    """
+    #print(f'state_now:{state_now}, state_dest:{state_destination}')
 
-    #'Es'間は10mくらい？？
-    #それぞれの階にて'Es'と店舗の最短距離を求めておく
+    for agent_store in agents_store:
+        if state_now == '0':
+            now_floor = 0
+            Es_now = 2
+        if agent_store.type == state_now:
+            now_floor = agent_store.floor
+            Es_now = agent_store.Es_distance
+        if agent_store.type == state_destination:
+            dest_floor = agent_store.floor
+            Es_dest = agent_store.Es_distance
 
 
 
-    #pprint.pprint(map[0])
+    #print(f'now_floor:{now_floor}, Es_now:{Es_now}, dest_floor:{dest_floor}, Es_dest:{Es_dest}')
+    distance = abs(dest_floor - now_floor)*10 + Es_now + Es_dest
 
-
+    return distance
 
 
 def show_store_info(agents_store):
