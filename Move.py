@@ -1,39 +1,65 @@
 import random as rnd
 import Agent_man
 import Agent_store
+import Decision
 
-def initialize_state_task(agents):
+def initialize_state_task(agents,agents_store,time):
     """
     Ramdamly select initially state and task of agents
     """
     initial_state_list = ['Gr','Cl','Rt','Cf','Mg']
-    initial_task_list = [3,4,5]
+    initial_task_list = [1,2,3,4,5]
 
     for agent_id, agent in enumerate(agents):
-        agent.next_state = rnd.choice(initial_state_list)
         agent.task = rnd.choice(initial_task_list)
         agent.list_store = rnd.sample(initial_state_list, agent.task)
-        #print(f'agent:{agent_id}, state:{agent.state}, task:{agent.task}')
+        #agent.next_state = rnd.choice(agent.list_store)
+
         for list in agent.list_store:
-            agent.spent_time.append(Agent_store.service_time(list))
-        
+            agent.spent_time[list] = Agent_store.service_time(list)
+
+
+        if agent.strategy == 'C':
+            agent.next_state = Decision.prioritize_store(agent, agent_id)
+        elif agent.strategy =='D':
+            agent.next_state = Decision.randam_store(agent)
+        elif agent.strategy == 'E':
+            agent.next_state = Decision.likely_distane(agent, agents_store)
+        elif agent.strategy == 'F':
+            agent.next_state = Decision.likely_time(agent, time)
+
+        #print(f'agent:{agent_id}, state:{agent.state}, task:{agent.task}')
 
 
 
 
-def state_task_for_new_agents(agents):
+
+def state_task_for_new_agents(agents,agents_store, time,length):
     """
     Ramdamly select state and task of new agents
     """
 
-    state_list = ['Gr','Cl','Rt','Cf','Mg']
-    task_list = [1,2,3,4,5]
-    for agent_id, agent in enumerate(agents):
-        agent.next_state= rnd.choice(state_list)
-        #agent.next_state = agent.state
-        agent.task = rnd.choice(task_list)
-        #print(f'new_agent:{agent_id}, state:{agent.state}, task:{agent.task}')
+    initial_state_list = ['Gr','Cl','Rt','Cf','Mg']
+    initial_task_list = [1,2,3,4,5]
 
+    for agent_id, agent in enumerate(agents):
+        #print(f'id:{agent_id+length}')
+        agent.task = rnd.choice(initial_task_list)
+        agent.list_store = rnd.sample(initial_state_list, agent.task)
+        #agent.next_state = rnd.choice(agent.list_store)
+        agent.task = agent.task + 1
+        #print(f'agent:{agent_id}, state:{agent.state}, task:{agent.task}')
+        for list in agent.list_store:
+            agent.spent_time[list] = Agent_store.service_time(list)
+
+        if agent.strategy == 'C':
+            agent.next_state = Decision.prioritize_store(agent, agent_id+length)
+        elif agent.strategy =='D':
+            agent.next_state = Decision.randam_store(agent)
+        elif agent.strategy == 'E':
+            agent.next_state = Decision.likely_distane(agent, agents_store)
+        elif agent.strategy == 'F':
+            agent.next_state = Decision.likely_time(agent, time)
 
 
 def agents_moves(agents,season):
@@ -44,7 +70,7 @@ def agents_moves(agents,season):
     for id, agent in enumerate(agents):
         if agent.next_state != '0':
             if agent.state != agent.next_state:
-                if season != 1:
+                if season != 0:
                     agent.task = agent.task -1
             agent.state = agent.next_state
             agent.next_state = 'NULL'
