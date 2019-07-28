@@ -1,15 +1,19 @@
 import numpy as np
 import random as rnd
 import Agent_man
+import Agent_store
 
 def initial_strategy(agents):
     """
     Ramdamly select initially strategy
     """
-    initial_strategy_list = ['A','B','C','D']
+    #initial_strategy_list = ['A','B','C','D','E','F']
+    initial_strategy_list = ['C','D','E','F']
+
 
     for agent_id, agent in enumerate(agents):
         agent.strategy = rnd.choice(initial_strategy_list)
+        #agent.strategy = 'F'
         #print(f'agent:{agent_id}, strategy:{agent.strategy}')
 
 
@@ -44,6 +48,7 @@ def likely_crowded(agents,tmp):
 
     if len(tmp_list) != 0:
         list_crowded = sorted(tmp_list, key=lambda x:tmp[x])
+        #print(f'list_crowded:{list_crowded}')
         print(f'A_next_state:{list_crowded[-1]}')
 
         return list_crowded[-1]
@@ -61,6 +66,7 @@ def likely_vacant(agents,tmp):
 
     if len(tmp_list) != 0:
         list_vacant = sorted(tmp_list, key=lambda x:tmp[x])
+        #print(f'list_vacant:{list_vacant}')
         print(f'B_next_state:{list_vacant[0]}')
 
         return list_vacant[0]
@@ -84,12 +90,16 @@ def prioritize_store(agents, agents_id):
     if len(tmp) != 0:
         if agents_id % 4 == 0:
             order = sorted(tmp, key=lambda x:tmp_0[x])
+            #print(f'order_0:{order}')
         elif agents_id % 4 == 1:
             order = sorted(tmp, key=lambda x:tmp_1[x])
+            #print(f'order_1:{order}')
         elif agents_id % 4 == 2:
             order = sorted(tmp, key=lambda x:tmp_2[x])
+            #print(f'order_2:{order}')
         elif agents_id % 4 == 3:
             order = sorted(tmp, key=lambda x:tmp_3[x])
+            #print(f'order_3:{order}')
         print(f'id:{agents_id}, C_next_state:{order[0]}')
 
         return order[0]
@@ -109,6 +119,75 @@ def randam_store(agent):
     else:
 
         return '0'
+
+def likely_distane(agents,agents_store):
+    """
+    現在、自分のいるところから一番近いところを次の場所にする戦略
+    """
+    now_state = agents.state
+    tmp_list = list(set(agents.list_store) - set(agents.visited_store))
+    #print(f'now_state:{now_state}, list:{tmp_list}')
+
+    if len(tmp_list) != 0:
+        dis = {state: Agent_store.calc_distance(now_state, state, agents_store) for state in tmp_list}
+        print(f'now:{now_state}, dis:{dis},min_dis:{min(dis, key=dis.get)}')
+        return min(dis,key=dis.get)
+    else:
+
+        return '0'
+
+def likely_time(agents,time):
+    """
+    時間帯に合わせて次の目的地を決める戦略
+    """
+    time_10_11 = {'Gr':3, 'Cl':4, 'Rt':2, 'Cf':1, 'Mg':4}
+    time_11_13 = {'Gr':1, 'Cl':2, 'Rt':4, 'Cf':3, 'Mg':2}
+    time_13_15 = {'Gr':1, 'Cl':4, 'Rt':2, 'Cf':3, 'Mg':4}
+    time_15_17 = {'Gr':2, 'Cl':3, 'Rt':1, 'Cf':4, 'Mg':3}
+    time_17_18 = {'Gr':4, 'Cl':1, 'Rt':3, 'Cf':2, 'Mg':1}
+    time_18_20 = {'Gr':3, 'Cl':1, 'Rt':4, 'Cf':2, 'Mg':1}
+
+    tmp_list = list(set(agents.list_store) - set(agents.visited_store))
+    next_list = []
+
+    if len(tmp_list) != 0:
+        hour = int(time.strftime('%H'))
+        if hour < 11:
+            next_list = sorted(tmp_list, key=lambda x:time_10_11[x])
+            #print(f'next_list_10_11:{next_list}')
+        elif hour >= 11 & hour < 13:
+            next_list = sorted(tmp_list, key=lambda x:time_11_13[x])
+            #print(f'next_list_11_13:{next_list}')
+        elif hour >= 13 & hour < 15:
+            next_list = sorted(tmp_list, key=lambda x:time_13_15[x])
+            #print(f'next_list_13_15:{next_list}')
+        elif hour >= 15 & hour < 17:
+            next_list = sorted(tmp_list, key=lambda x:time_15_17[x])
+            #print(f'next_list_15_17:{next_list}')
+        elif hour >= 17 & hour < 18:
+            next_list = sorted(tmp_list, key=lambda x:time_17_18[x])
+            #print(f'next_list_17_18:{next_list}')
+        elif hour >= 18 & hour < 20:
+            next_list = sorted(tmp_list, key=lambda x:time_18_20[x])
+            #print(f'next_list18_20:{next_list}')
+
+        if len(next_list) > 2:
+            check = next_list[len(next_list)-1:len(next_list)-3:-1]
+            print(f'check:{check}')
+        else:
+            check = next_list
+
+        if 'Mg' in check and 'Cl' in check:
+
+            return rnd.choice(check)
+        else:
+            return next_list[-1]
+
+    else:
+
+        return '0'
+
+
 
 
 
@@ -132,12 +211,15 @@ def store_crowded(agents_store):
     return tmp
 
 
-def strategy_determine_state(agents,agents_store):
 
-    state_list = ['Gr','Cl','Rt','Cf','Mg']
+def strategy_determine_state(agents,agents_store,time):
     """
     ↓：滞在時間とagent毎の意思決定に基づくnext_stateの決定
     """
+    state_list = ['Gr','Cl','Rt','Cf','Mg']
+    crowded = store_crowded(agents_store)
+
+
     for id,agent in enumerate(agents):
          #first, insert now state into visited list
          agent.visited_store.append(agent.state)
@@ -155,13 +237,14 @@ def strategy_determine_state(agents,agents_store):
                  else:
 
                      if agent.strategy == 'A':
-                         agent.next_state = likely_crowded(agent, store_crowded(agents_store))
+                         agent.next_state = likely_crowded(agent, crowded)
                          for agent_store in agents_store:
                              if agent_store.type == agent.state:
                                  if id in agent_store.instore:
                                      agent_store.instore.remove(id)
                      elif agent.strategy == 'B':
-                         agent.next_state = likely_vacant(agent, store_crowded(agents_store))
+                         agent.next_state = likely_vacant(agent, crowded)
+                         #agent.next_state = likely_distane(agent, agents_store)
                          for agent_store in agents_store:
                              if agent_store.type == agent.state:
                                  if id in agent_store.instore:
@@ -174,6 +257,18 @@ def strategy_determine_state(agents,agents_store):
                                      agent_store.instore.remove(id)
                      elif agent.strategy == 'D':
                          agent.next_state = randam_store(agent)
+                         for agent_store in agents_store:
+                             if agent_store.type == agent.state:
+                                 if id in agent_store.instore:
+                                     agent_store.instore.remove(id)
+                     elif agent.strategy == 'E':
+                         agent.next_state = likely_distane(agent, agents_store)
+                         for agent_store in agents_store:
+                             if agent_store.type == agent.state:
+                                 if id in agent_store.instore:
+                                     agent_store.instore.remove(id)
+                     elif agent.strategy == 'F':
+                         agent.next_state = likely_time(agent, time)
                          for agent_store in agents_store:
                              if agent_store.type == agent.state:
                                  if id in agent_store.instore:
@@ -279,6 +374,9 @@ def count_strategy(agents):
     num_a = len([agent for agent in agents if agent.strategy == 'A'])
     num_b = len([agent for agent in agents if agent.strategy == 'B'])
     num_c = len([agent for agent in agents if agent.strategy == 'C'])
+    num_d = len([agent for agent in agents if agent.strategy == 'D'])
+    num_e = len([agent for agent in agents if agent.strategy == 'E'])
+    num_f = len([agent for agent in agents if agent.strategy == 'F'])
 
 
-    return num_a, num_b, num_c
+    return num_a, num_b, num_c,num_d,num_e,num_f
